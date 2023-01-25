@@ -1,0 +1,15 @@
+.popup__description-field {
+  width: 90%;
+  min-height: 27px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+@media screen and (max-width: 460px) {
+  .popup__description-field {
+    max-width: 238px;
+  }
+}
