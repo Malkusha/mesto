@@ -3,6 +3,9 @@
   font-size: 18px;
   line-height: 22px;
   align-self: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 768px) {
@@ -16,6 +19,5 @@
   .profile__description {
     padding-left: 27px;
     align-self: center;
-    justify-self: center;
   }
 }

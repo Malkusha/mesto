@@ -6,7 +6,7 @@
   height: 32px;
   border: none;
   background-image: url(../../../images/CloseIcon.svg);
-  background-color: #000;
+  background-color: transparent;
   background-size: cover;
   transition: opacity 0.5s linear;
 }

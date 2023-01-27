@@ -10,7 +10,7 @@
   .profile__info {
     grid-template-columns: minmax(189px,216px) 1fr;
     margin-top: 26px;
-    justify-items: end;
+    justify-items: center;
     gap: 10px;
   }
 }

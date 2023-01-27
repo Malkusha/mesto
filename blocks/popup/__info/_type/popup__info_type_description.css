@@ -1,0 +1,9 @@
+.popup__info_type_description {
+  
+}
+
+@media screen and (max-width: 460px) {
+  .popup__info_type_description {
+   
+  }
+}
