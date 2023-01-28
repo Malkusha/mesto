@@ -23,7 +23,7 @@ function handleFormSubmit (evt) {
     let jobValue = jobInput.value;
     profileName.textContent = nameValue;
     profileDescription.textContent = jobValue;
-
+    closePopup();
 }
 
 editButton.addEventListener('click', showPopup);
