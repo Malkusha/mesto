@@ -32,7 +32,7 @@ function closePopup(popup) {
 function closePopupEsc(evt) {
   popupOpen = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
-    closePopup(popupOpen);    
+    closePopup(popupOpen);
   }
 }
 
@@ -42,6 +42,7 @@ function closePopupClick(evt) {
   if (evt.target === popupOpen) {
     closePopup(popupOpen);
   }
+
 }
 
 function likeCard(evt) {

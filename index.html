@@ -26,8 +26,10 @@
           <button class="popup__close-button profile-popup__close-button" type="button" aria-label="Закрыть"></button>
           <form class="popup__edit-form profile-edit" name="edit-profile" action="submit" id="edit-profile" novalidate>
             <h2 class="popup__title">Редактировать профиль</h2>
-            <input class="popup__info popup__info_type_name profile-edit__name" name="name-field" type="text" placeholder="Имя" minlength="2" maxlength="40" required>
-            <input class="popup__info popup__info_type_description profile-edit__description" name="description-field" type="text" placeholder="Описание" minlength="2" maxlength="200" required>
+            <input class="popup__info popup__info_type_name profile-edit__name" id="name-input" name="name-field" type="text" placeholder="Имя" minlength="2" maxlength="40" required>
+            <span class="popup__input-error name-input-error"></span>
+            <input class="popup__info popup__info_type_description profile-edit__description" id="description-input" name="description-field" type="text" placeholder="Описание" minlength="2" maxlength="200" required>
+            <span class="popup__input-error description-input-error"></span>
             <button class="popup__save-button" type="submit" form="edit-profile">Сохранить</button>
           </form>
         </div>
@@ -37,8 +39,10 @@
           <button class="popup__close-button card-popup__close-button" type="button" aria-label="Закрыть"></button>
           <form class="popup__edit-form cards-edit" name="edit-cards" action="submit" id="edit-cards"  novalidate>
             <h2 class="popup__title">Новое место</h2>
-            <input class="popup__info popup__info_type_name cards-edit__name" name="place-field" type="text" placeholder="Название" minlength="2" maxlength="30" required>
-            <input class="popup__info popup__info_type_description cards-edit__description" name="link-field" type="url" placeholder="Ссылка на картинку" required>
+            <input class="popup__info popup__info_type_name cards-edit__name" id="place-input" name="place-field" type="text" placeholder="Название" minlength="2" maxlength="30" required>
+            <span class="popup__input-error place-input-error"></span>
+            <input class="popup__info popup__info_type_description cards-edit__description" id="link-input" name="link-field" type="url" placeholder="Ссылка на картинку" required>
+            <span class="popup__input-error link-input-error"></span>
             <button class="popup__save-button" type="submit" form="edit-cards">Создать</button>
           </form>
         </div>
