@@ -21,11 +21,27 @@ const closePopupImageButton = document.querySelector('.image-popup__close-button
 
 function showPopup(popup) {
   popup.classList.add('popup_opened');
-
+  document.addEventListener('keydown', closePopupEsc);
+  popup.addEventListener('mousedown', closePopupClick);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+}
+
+function closePopupEsc(evt) {
+  popupOpen = document.querySelector('.popup_opened');
+  if (evt.key === 'Escape') {
+    closePopup(popupOpen);    
+  }
+}
+
+function closePopupClick(evt) {
+  popupOpen = document.querySelector('.popup_opened');
+  evt.stopPropagation();
+  if (evt.target === popupOpen) {
+    closePopup(popupOpen);
+  }
 }
 
 function likeCard(evt) {
@@ -40,7 +56,7 @@ function zoomImage(img) {
   popupImage.src = img.src;
   popupImage.alt = img.alt;
   popupImageCaption.textContent = img.alt;
-  showPopup(popupZoomImage);  
+  showPopup(popupZoomImage);
 }
 
 function addCard(card) {
