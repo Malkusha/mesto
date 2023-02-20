@@ -101,7 +101,6 @@ function handleFormProfileSubmit (evt) {
     const jobValue = jobInput.value;
     profileName.textContent = nameValue;
     profileDescription.textContent = jobValue;
-
     closePopup(popupProfile);
 }
 
@@ -110,11 +109,11 @@ function handleOpenPopupProfile() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
 }
-
+nameInput.value = profileName.textContent;
+jobInput.value = profileDescription.textContent;
 editButton.addEventListener('click', handleOpenPopupProfile);
 
 renderElements(initialCards);
-
 formAddCard.addEventListener('submit', handleFormCardsSubmit);
 addButton.addEventListener('click', () => showPopup(popupCard));
 formProfile.addEventListener('submit', handleFormProfileSubmit);

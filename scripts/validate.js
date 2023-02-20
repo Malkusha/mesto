@@ -1,8 +1,8 @@
 const validConfig = {
   formSelector: 'popup__edit-form',
   inputSelector: 'popup__info',
-  submitButtonSelector: 'popup__button_purpose_submit',
-  inactiveButtonClass: 'popup__button_disabled',
+  submitButtonSelector: 'popup__save-button',
+  inactiveButtonClass: 'popup__save-button_disabled',
   inputErrorClass: 'popup__info_condition_error',
   errorClass: 'popup__input-error_active'
 }
@@ -38,10 +38,13 @@ const checkInputValidity = (form, input) => {
 };
 
 function IsInputsValid(form) {
-  const inputList = Array.from(form.querySelectorAll('.popup__info'));
-  console.log(inputList);
+  const inputList = Array.from(form.querySelectorAll(`.${validConfig.inputSelector}`));
+  const saveButton = form.querySelector(`.${validConfig.submitButtonSelector}`);
+  toggleButtonState(inputList, saveButton);
+  
   inputList.forEach((input) => {
     input.addEventListener('input', () => {
+      toggleButtonState(inputList, saveButton);
       checkInputValidity(form, input);
     })
     
@@ -51,8 +54,26 @@ function IsInputsValid(form) {
 function enableValidation(config) {
   const formsList = Array.from(document.querySelectorAll(`.${config.formSelector}`));
   formsList.forEach((form) => {
+    form.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+    });
     IsInputsValid(form);
   })
+}
+
+function hasInvalidInput(inputList) {
+  return inputList.some((input) => {
+    return !input.validity.valid;
+}); 
+}
+
+function toggleButtonState(inputList, button) {
+  console.log(hasInvalidInput(inputList));
+  if (hasInvalidInput(inputList)) {
+    button.classList.add(validConfig.inactiveButtonClass);
+  } else {
+    button.classList.remove(validConfig.inactiveButtonClass);
+  }
 }
 
 enableValidation(validConfig);
