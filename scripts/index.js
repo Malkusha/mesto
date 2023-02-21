@@ -5,6 +5,7 @@ function showPopup(popup) {
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupEsc);
 }
 
 function closePopupEsc(evt) {
@@ -12,7 +13,7 @@ function closePopupEsc(evt) {
   if (evt.key === 'Escape') {
     closePopup(popupOpen);
   }
-  document.addEventListener('keydown', closePopupEsc);
+  
 }
 
 function closePopupClick(evt) {
