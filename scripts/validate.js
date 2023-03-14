@@ -1,5 +1,4 @@
 const validConfig = {
-  formSelector: 'popup__edit-form',
   inputSelector: 'popup__info',
   submitButtonSelector: 'popup__save-button',
   inactiveButtonClass: 'popup__save-button_disabled',
@@ -7,8 +6,8 @@ const validConfig = {
   errorClass: 'popup__input-error_active'
 }
 
-const showError = (form, input, errorMessage, config) => {
-  
+/*const showError = (form, input, errorMessage, config) => {
+
   const errorInput = form.querySelector(`.${input.id}-error`);
   if (input.classList.contains('popup__info_type_description')) {
     errorInput.classList.add('popup__input-error_margin_last');
@@ -21,7 +20,7 @@ const showError = (form, input, errorMessage, config) => {
 };
 
 const hideError = (form, input, config) => {
-  const errorInput = form.querySelector(`.${input.id}-error`); 
+  const errorInput = form.querySelector(`.${input.id}-error`);
   input.classList.remove(config.inputErrorClass);
   errorInput.classList.remove(config.errorClass);
   errorInput.textContent = '';
@@ -34,7 +33,6 @@ const checkInputValidity = (form, input, config) => {
   else {
     hideError(form, input, config);
   }
-  
 };
 
 function setEventListeners(form, config) {
@@ -52,7 +50,7 @@ function setEventListeners(form, config) {
       toggleButtonState(inputList, saveButton, config);
       checkInputValidity(form, input, config);
     })
-    
+
   })
 }
 
@@ -69,11 +67,11 @@ function enableValidation(config) {
 function hasInvalidInput(inputList) {
   return inputList.some((input) => {
     return !input.validity.valid;
-}); 
+});
 }
 
 function toggleButtonState(inputList, button, config) {
-  
+
   if (hasInvalidInput(inputList)) {
     button.classList.add(config.inactiveButtonClass);
     button.disabled = true;
@@ -83,4 +81,6 @@ function toggleButtonState(inputList, button, config) {
   }
 }
 
-enableValidation(validConfig);
+enableValidation(validConfig);*/
+
+export {validConfig}
