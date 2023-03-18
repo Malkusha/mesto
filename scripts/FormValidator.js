@@ -9,15 +9,17 @@ class FormValidator {
     this._inputErrorClass = config.inputErrorClass;
     this._errorClass = config.errorClass;
     this._inputOrderCheck = config.inputOrderCheck;
+    this._inputOrderFirst = config.inputOrderFirst;
+    this._inputOrderLast = config.inputOrderLast;
   }
 
   _showError = (input, errorMessage) => {
     const errorInput = this._form.querySelector(`.${input.id}-error`);
 
     if (input.classList.contains(this._inputOrderCheck)) {
-      errorInput.classList.add('popup__input-error_margin_last');
+      errorInput.classList.add(this._inputOrderLast);
     } else {
-      errorInput.classList.add('popup__input-error_margin_first');
+      errorInput.classList.add(this._inputOrderFirst);
     }
 
     input.classList.add(this._inputErrorClass);

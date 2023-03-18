@@ -41,6 +41,8 @@ function handleFormCardsSubmit(evt) {
   const cardElement = createCard({name,link});
   formAddCard.reset();
   elementsList.prepend(cardElement);
+
+  closePopup(popupCard);
 }
 
 function handleFormProfileSubmit (evt) {
@@ -49,6 +51,8 @@ function handleFormProfileSubmit (evt) {
     const jobValue = jobInput.value;
     profileName.textContent = nameValue;
     profileDescription.textContent = jobValue;
+
+    closePopup(popupProfile);
 }
 
 function handleOpenPopupProfile() {
