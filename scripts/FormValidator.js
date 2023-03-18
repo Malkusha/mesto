@@ -1,20 +1,20 @@
-import {validConfig} from './validate.js';
-
 class FormValidator {
-  constructor(config, formSelector) {
-    this._formSelector = formSelector;
+  constructor(config, form) {
+    this._form = form;
 
-    this._inputSelector = config.inputSelector;
-    this._submitButtonSelector = config.submitButtonSelector;
+    this._inputList = Array.from(this._form.querySelectorAll(`.${config.inputSelector}`));
+    this._saveButton = this._form.querySelector(`.${config.submitButtonSelector}`);
+
     this._inactiveButtonClass = config.inactiveButtonClass;
     this._inputErrorClass = config.inputErrorClass;
     this._errorClass = config.errorClass;
+    this._inputOrderCheck = config.inputOrderCheck;
   }
 
-  _showError = (form, input, errorMessage) => {
-    const errorInput = form.querySelector(`.${input.id}-error`);
+  _showError = (input, errorMessage) => {
+    const errorInput = this._form.querySelector(`.${input.id}-error`);
 
-    if (input.classList.contains('popup__info_type_description')) {
+    if (input.classList.contains(this._inputOrderCheck)) {
       errorInput.classList.add('popup__input-error_margin_last');
     } else {
       errorInput.classList.add('popup__input-error_margin_first');
@@ -25,69 +25,61 @@ class FormValidator {
     errorInput.classList.add(this._errorClass);
   };
 
-  _hideError = (form, input) => {
-    const errorInput = form.querySelector(`.${input.id}-error`);
+  _hideError = (input) => {
+    const errorInput = this._form.querySelector(`.${input.id}-error`);
     input.classList.remove(this._inputErrorClass);
     errorInput.classList.remove(this._errorClass);
     errorInput.textContent = '';
   }
 
-  _checkInputValidity = (form, input) => {
+  _checkInputValidity = (input) => {
     if (!input.validity.valid) {
-      this._showError(form, input, input.validationMessage);
+      this._showError(input, input.validationMessage);
     }
     else {
-      this._hideError(form, input);
+      this._hideError(input);
     }
   };
 
-  _hasInvalidInput(inputList) {
-    return inputList.some((input) => {
+  _hasInvalidInput() {
+    return this._inputList.some((input) => {
       return !input.validity.valid;
     });
   }
 
-  _toggleButtonState(inputList, button) {
+  _toggleButtonState() {
 
-    if (this._hasInvalidInput(inputList)) {
-      button.classList.add(this._inactiveButtonClass);
-      button.disabled = true;
+    if (this._hasInvalidInput()) {
+      this._saveButton.classList.add(this._inactiveButtonClass);
+      this._saveButton.disabled = true;
     } else {
-      button.classList.remove(this._inactiveButtonClass);
-      button.disabled = false;
+      this._saveButton.classList.remove(this._inactiveButtonClass);
+      this._saveButton.disabled = false;
     }
   }
 
-  _setEventListeners(form) {
-    const inputList = Array.from(form.querySelectorAll(`.${this._inputSelector}`));
-    const saveButton = form.querySelector(`.${this._submitButtonSelector}`);
-
-    this._toggleButtonState(inputList, saveButton);
-    form.addEventListener('reset', () => {
+  _setEventListeners() {
+    this._toggleButtonState();
+    this._form.addEventListener('reset', () => {
       setTimeout(() => {
-      this._toggleButtonState(inputList, saveButton)
+      this._toggleButtonState()
       }, 0);
       });
 
-    inputList.forEach((input) => {
+    this._inputList.forEach((input) => {
       input.addEventListener('input', () => {
-        this._toggleButtonState(inputList, saveButton);
-        this._checkInputValidity(form, input);
+        this._toggleButtonState();
+        this._checkInputValidity(input);
       })
     })
   }
 
   enableValidation() {
-    const form = document.querySelector(this._formSelector);
-    form.addEventListener('submit', function (evt) {
+    this._form.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
-    this._setEventListeners(form);
+    this._setEventListeners();
   }
 }
 
-const profileFormValidator = new FormValidator(validConfig, '.profile-edit');
-const cardFormValidator = new FormValidator(validConfig, '.cards-edit');
-
-profileFormValidator.enableValidation();
-cardFormValidator.enableValidation();
+export {FormValidator}

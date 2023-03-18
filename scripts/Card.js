@@ -1,11 +1,9 @@
-import {popupImage, popupImageCaption, popupZoomImage} from './constants.js';
-import {showPopup, closePopup, closePopupEsc, closePopupClick} from './index.js';
-
 class Card {
-  constructor (item, templateSelector) {
+  constructor (item, templateSelector, handleCardClick) {
     this._link = item.link;
     this._name = item.name;
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -18,7 +16,7 @@ class Card {
     return cardElement;
   }
 
-  _likeCard(evt) {
+  _toggleLike(evt) {
     evt.target.classList.toggle('elements__like_type_on');
   }
 
@@ -26,24 +24,24 @@ class Card {
     evt.target.parentElement.remove();
   }
 
-  _zoomImage(img) {
-    popupImage.src = img.src;
-    popupImage.alt = img.alt;
-    popupImageCaption.textContent = img.alt;
-    showPopup(popupZoomImage);
-  }
-
   addCard() {
     this._element = this._getTemplate();
-    const itemImage = this._element.querySelector('.elements__item-image');
-    this._element.querySelector('.elements__item-image').src = this._link;
-    this._element.querySelector('.elements__item-image').alt = this._name;
+    this._itemImage = this._element.querySelector('.elements__item-image');
+    this._likeButton = this._element.querySelector('.elements__like');
+    this._deleteButton = this._element.querySelector('.elements__delete');
+    this._itemImage.src = this._link;
+    this._itemImage.alt = this._name;
     this._element.querySelector('.elements__item-title').textContent = this._name;
-    this._element.querySelector('.elements__like').addEventListener('click', this._likeCard);
-    this._element.querySelector('.elements__delete').addEventListener('click', this._deleteCard);
-    itemImage.addEventListener('click', () => this._zoomImage(itemImage));
+
+    this._setEventListeners();
 
     return this._element;
+  }
+
+  _setEventListeners() {
+    this._likeButton.addEventListener('click', this._toggleLike);
+    this._deleteButton.addEventListener('click', this._deleteCard);
+    this._itemImage.addEventListener('click', () => this._handleCardClick(this._name, this._link));
   }
 }
 

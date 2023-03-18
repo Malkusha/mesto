@@ -1,8 +1,10 @@
 import {Card} from './Card.js';
 import {initialCards} from './cards.js';
-import {elementsList, popupProfile, popupCard, closePopupProfileButton, closePopupCardButton, formAddCard,
+import {popups, elementsList, popupProfile, popupCard, formAddCard,
         placeInput, linkInput, editButton, addButton, formProfile, nameInput, jobInput, profileName,
-        profileDescription, closePopupImageButton, popupZoomImage} from './constants.js';
+        profileDescription, popupImage, popupImageCaption, popupZoomImage} from './constants.js';
+import {FormValidator} from './FormValidator.js';
+import {validConfig} from './validate.js';
 
 function showPopup(popup) {
   popup.classList.add('popup_opened');
@@ -15,25 +17,19 @@ function closePopup(popup) {
 }
 
 function closePopupEsc(evt) {
-  const popupOpen = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
+    const popupOpen = document.querySelector('.popup_opened');
     closePopup(popupOpen);
   }
 }
 
-function closePopupClick(evt) {
-  const popupOpen = document.querySelector('.popup_opened');
-  evt.stopPropagation();
-  if (evt.target === popupOpen) {
-    closePopup(popupOpen);
-  }
+function createCard (el) {
+  const card = new Card(el, '#el-template', handleCardClick);
+  return card.addCard();
 }
 
 function renderElements(cards) {
-  const elements = cards.map((el) => {
-    const card = new Card(el, '#el-template');
-    return card.addCard();
-  });
+  const elements = cards.map(createCard);
 
   elementsList.prepend(...elements);
 }
@@ -42,13 +38,9 @@ function handleFormCardsSubmit(evt) {
   evt.preventDefault();
   const name = placeInput.value;
   const link = linkInput.value;
-  const card = new Card({name: name,
-                        link: link}, '#el-template');
-  const cardElement = card.addCard();
+  const cardElement = createCard({name,link});
   formAddCard.reset();
   elementsList.prepend(cardElement);
-
-  closePopup(popupCard);
 }
 
 function handleFormProfileSubmit (evt) {
@@ -57,7 +49,6 @@ function handleFormProfileSubmit (evt) {
     const jobValue = jobInput.value;
     profileName.textContent = nameValue;
     profileDescription.textContent = jobValue;
-    closePopup(popupProfile);
 }
 
 function handleOpenPopupProfile() {
@@ -66,20 +57,33 @@ function handleOpenPopupProfile() {
   jobInput.value = profileDescription.textContent;
 }
 
-nameInput.value = profileName.textContent;
-jobInput.value = profileDescription.textContent;
+function handleCardClick(name, link) {
+  popupImage.src = link;
+  popupImage.alt = name;
+  popupImageCaption.textContent = name;
+  showPopup(popupZoomImage);
+}
+
 editButton.addEventListener('click', handleOpenPopupProfile);
 
 renderElements(initialCards);
 formAddCard.addEventListener('submit', handleFormCardsSubmit);
 addButton.addEventListener('click', () => showPopup(popupCard));
 formProfile.addEventListener('submit', handleFormProfileSubmit);
-closePopupProfileButton.addEventListener('click', () => closePopup(popupProfile));
-closePopupCardButton.addEventListener('click', () => closePopup(popupCard));
-closePopupImageButton.addEventListener('click', () => closePopup(popupZoomImage));
 
-popupProfile.addEventListener('mousedown', closePopupClick);
-popupCard.addEventListener('mousedown', closePopupClick);
-popupZoomImage.addEventListener('mousedown', closePopupClick);
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) {
+          closePopup(popup)
+      }
+      if (evt.target.classList.contains('popup__close-button')) {
+        closePopup(popup)
+      }
+  })
+})
 
-export {showPopup, closePopup, closePopupEsc, closePopupClick};
+const profileFormValidator = new FormValidator(validConfig, formProfile);
+const cardFormValidator = new FormValidator(validConfig, formAddCard);
+
+profileFormValidator.enableValidation();
+cardFormValidator.enableValidation();
