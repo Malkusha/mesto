@@ -1,5 +1,3 @@
-import './index.css';
-
 import {Section} from '../components/Section.js';
 import {PopupWithImage} from '../components/PopupWithImage.js';
 import {Card} from '../components/Card.js';
@@ -12,16 +10,18 @@ import {FormValidator} from '../components/FormValidator.js';
 import {validConfig} from '../utils/validate.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 
-function createCard (item) {
+function getCard(item) {
   const card = new Card(item, '#el-template', handleCardClick);
-  const cardElement = card.addCard();
+  return card.addCard();
+}
+
+function createCard (item) {
+  const cardElement = getCard(item);
   cardList.addItem(cardElement);
 };
 
 function handleCardClick(name, link) {
-  const popupImageOpened = new PopupWithImage(popupZoomImage, popupImage, popupImageCaption);
   popupImageOpened.open(name,link);
-  popupImageOpened.setEventListener();
 };
 
 function handleFormCardsSubmit(item) {
@@ -41,6 +41,8 @@ const cardList = new Section({
   }
 },
 elementsList);
+
+const popupImageOpened = new PopupWithImage(popupZoomImage, popupImage, popupImageCaption);
 
 const popupNewCard = new PopupWithForm(
   popupCard,
@@ -62,15 +64,18 @@ const cardFormValidator = new FormValidator(validConfig, formAddCard);
 cardList.renderItems();
 editButton.addEventListener('click', () => {
   popupEditProfile.open();
-  userInfo.getUserInfo();
+  profileFormValidator.resetValidation();
+  popupEditProfile.setInputValues(userInfo.getUserInfo());
   }
 );
-addButton.addEventListener('click', () => popupNewCard.open());
+addButton.addEventListener('click', () => {
+  popupNewCard.open();
+  cardFormValidator.resetValidation();
+});
 
+popupImageOpened.setEventListener();
 popupEditProfile.setEventListener();
 popupNewCard.setEventListener();
-
-
 
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();

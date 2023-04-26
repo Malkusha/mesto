@@ -1,4 +1,5 @@
 const validConfig = {
+  formSelector: 'popup__edit-form',
   inputSelector: 'popup__info',
   submitButtonSelector: 'popup__save-button',
   inactiveButtonClass: 'popup__save-button_disabled',
