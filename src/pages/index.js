@@ -67,19 +67,18 @@ function handleFormAvatarSubmit (item) {
 
 function handleLikeCard(id, item) {
   item._toggleLike();
-  console.log(item.isLiked());
   if (!item.isLiked()) {
     api.addLike(id)
-      .then((res) => {
-        item._likesCount.textContent = res.likes.length;
+      .then((data) => {
+        item.countNewLikes(data);
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
     })
   } else {
     api.removeLike(id)
-      .then((res) => {
-        item._likesCount.textContent = res.likes.length;
+      .then((data) => {
+        item.countNewLikes(data);
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);

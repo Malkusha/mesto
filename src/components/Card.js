@@ -37,6 +37,11 @@ class Card {
     return this._likes.some((item) => item._id === this._userId);
   }
 
+  countNewLikes(data) {
+    this._likesCount.textContent = data.likes.length;
+    this._likes = data.likes;
+  }
+
   addCard() {
     this._element = this._getTemplate();
     this._itemImage = this._element.querySelector('.elements__item-image');
