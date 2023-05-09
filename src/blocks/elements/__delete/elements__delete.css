@@ -9,6 +9,7 @@
   z-index: 1;
   border: none;
   transition: opacity 0.1s linear;
+  visibility: hidden;
 }
 
 .elements__delete:hover {
