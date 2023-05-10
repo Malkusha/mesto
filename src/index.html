@@ -71,10 +71,10 @@
       <div class="popup delete-popup">
         <div class="popup__container">
           <button class="popup__close-button delete-popup__close-button" type="button" aria-label="Закрыть"></button>
-          <div class="popup__delete-container">
+          <form class="popup__delete-container" name="delete" action="submit" id="delete" novalidate>
             <h2 class="popup__title">Вы уверены?</h2>
-            <button class="popup__save-button popup__delete-button" type="submit">Да</button>
-          </div>
+            <button class="popup__save-button" type="submit" form="delete">Да</button>
+          </form>
         </div>
       </div>
       <section class="elements">

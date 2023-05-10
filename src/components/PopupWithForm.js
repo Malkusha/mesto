@@ -17,9 +17,23 @@ class PopupWithForm extends Popup {
     super.setEventListener();
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._handleFormSubmit(this._getInputValues());
+      this._submitButton = this._form.querySelector('.popup__save-button');
+      const initialText = this._submitButton.textContent;
+      if (initialText === 'Сохранить') {
+        this._submitButton.textContent = 'Сохранение...';
+      }
+      else {
+        this._submitButton.textContent = 'Создание...';
+      };
+      this._handleFormSubmit(this._getInputValues())
+        .then(() => this.close())
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+      })
+        .finally(() => {
+          this._submitButton.textContent = initialText;
+        })
     });
-
   }
 
   setInputValues(data) {
