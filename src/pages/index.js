@@ -77,9 +77,9 @@ function handleLikeCard(id, item) {
 function handleDeleteCard(item) {
   function setDeleteResponse() {
     api.deleteCard(item.getId())
-    .then(() => {item.deleteCard();
-      item.popup.close();
-      })
+      .then(() => {item.deleteCard();
+        popupDelete.close();
+        })
     .catch((err) => {
       console.log(`Ошибка: ${err}`);
     });
